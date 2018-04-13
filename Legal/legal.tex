@@ -1,0 +1,26 @@
+\section{British Computing Society Code of Conduct}
+The British Computing Society (BCS\nomenclature{BCS}{British Computing Society}) has published a Code of Conduct\footnote{The code is available online at \texttt{\url{http://www.bcs.org/category/6030}}}, in order to set the required standards that an individual has to follow, in order to be a member. Throughout developing the project, these standards has been closely followed, and the project is fully compliant with them. There are four standards that the project follows:
+\begin{itemize}
+    \item \textbf{Public Interest}: The system and the applications built are available for everyone to use, regardless of sex, sexual orientation, marital status, nationality, colour, race, ethnic origin, religion, age or disability, or of any other condition or requirement. Moreover, the intellectual property of all the third parties are fully respected; their work is referenced to in this paper and the code components that belong to them have a clear specification of whom they belong to.
+    \item \textbf{Professional Competence and Integrity}: The project has allowed the developer involved to develop new skills and learn new concepts that have been applied here. Learning has been done in a continuous basis throughout the project. The project does no harm to anyone, and the project has not taken part into bribery or unethical inducements.
+    \item \textbf{Relevant Authority}: The project has been done by respecting the regulations of King's College London.
+    \item \textbf{Duty to the Profession}: The project has tried to improve the professional standards and make a valuable addition to the field it belongs to.
+\end{itemize}
+
+\section{Code of Good Practice}
+BCS has also published a Code of Good Practice\footnote{The code is available online at \texttt{\url{http://www.bcs.org/upload/pdf/cop.pdf}}}. However, this code includes many guidelines, compared to the Code of Conduct. Although it is long, many of them are relevant to the project, and have been followed through the project. The following points are the most relevant, and have been taken from section 4.2, which relates to Research, and section 5.2 which relates to Software Development:
+\begin{itemize}
+    \item \textbf{Investigate the analysis and research by other people and organisations into related topics and acknowledge their contribution to your research}: The project uses methods already detailed and used by other people in research papers. Before coming up with a solutions, these have been analysed in detail in order to explore ideas.
+    \item \textbf{Strive to achieve well-engineered products that demonstrate fitness for purpose, reliability, efficiency, security, safety, maintainability and cost effectiveness}: As previously stated in the Requirements chapter 3 and in the Evaluation chapter 6, the project has set many non-functional requirements, which have been met, which are present in the Code of Good Practice.
+    \item \textbf{Encourage re-usability; consider the broader applications of your designs and, likewise, before designing from new seek out any existing designs that could be re-used}: Re-usability is practised widely along the project, and this can be observed, for example, when the classes used in the database server are used throughout the logic layer components and the mobile applications.
+    \item \textbf{Produce code that other programmers will find easy to maintain; use meaningful naming conventions and avoid overly complex programming techniques, where these are not strictly necessary}: The features have been implemented using clean code, with variable names and function names that portray what data they hold, and respectively what actions they are performing.
+\end{itemize}
+
+\section{User Sensitive Data}
+The data collected by the admin application is split into user input data, such as the name of the rooms, and the collection of MAC addresses, network names and signal strengths of the Wi-Fi access points. This data is used for positioning the user. The calculations in order to determine this position are made on the server, and then the position is sent to the application. None of the servers or the applications store this data at any point. Moreover, the path finding process work in the exact same way. In this way, all the data is therefore anonymous and not linked to any user or individual.
+
+\section{Security of the Data Collected}
+The system lacks security because no user based system, or access control system has been developed for the database. In other words, all data stored by the database is accessible for everyone as long as one knows how to access it. The network requests that ask for data can be sniffed on a network and in this way, the resources that provide the data can be detected. However, all the content of the network request is being transmitted under HTTPS, therefore it is encrypted and inaccessible for an attacker.
+
+\section{Wi-Fi Data}
+The system scans for all the Wi-Fi networks that it can find, and cannot identify whether the network belongs to King's College London or not. Some entities might have regulations that forbid storing data about their Wi-Fi networks, so in order to abide by that, the future implementation of this software should only use the university's access points.

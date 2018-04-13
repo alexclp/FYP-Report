@@ -1,0 +1,37 @@
+\section{Motivation}
+\label{sec:motivation}
+
+Given the opening of of King's College London's newest building, Bush House, the new home of the Informatics department, there has been a demand for it to be mapped out, helping to familiarise the students with their new surroundings. To address this, a mobile application (app\nomenclature{App}{Application}) will be developed to provide navigation throughout the Informatics department. Adding to this main navigation feature a number of Augmented Reality (AR\nomenclature{AR}{Augmented Reality}) features will be implemented into the app to help solve some of the common issues that students encounter on campus.
+
+For example, students may struggle to locate computer labs or other rooms if it is the first time they are using them, or the rooms are hidden from the line of sight. In this case, AR features will be introduced to help the user to gain a better understanding of their surroundings, such as arrows to point to the direction they want to follow in order find a room.
+
+Another problem students incur is the difficulty to find an available computer. This can be particularly challenging during busy periods in the academic year, such as on the approach to coursework deadlines or exams.To solve this issue the app will link up with King's PC Free service, and so the number of available computers in each room will be clearly displayed as the user looks at the room on their phone.
+
+Similarly, it can be frustrating for students when their work is interrupted due to an unknown teaching session.  To avoid this the users will be able to view the scheduled bookings for the rooms to know between which hours they will be occupied.
+
+In recent months we have seen the introduction of AR to a number of services and devices, it therefore seems that this tool would be an excellent way to solve the issues I have outlined above as the user will be able to see all of the relevant information about their location and rooms they are looking at, using their mobile phone's camera.
+
+\section{Scope}
+\label{sec:scope}
+
+This project has one clear area to tackle: providing a robust and informative navigation system for the Department of Informatics in King's College London. The navigation system will be based on indoor positioning technologies, such as Wi-Fi.
+
+Additionally, this projects looks to make use of the rise in popularity of AR in order to provide more information for the user. The system will be composed of multiple independent parts, including:
+\begin{itemize}
+    \item Mobile applications that collect and show data.
+    \item A server that positions the user and assists in navigation.
+    \item A data management server that will handle the data flow responsible for the core functionalities.
+\end{itemize}
+
+Using this system, any other building that is part of King's College London can be mapped, provided the floor plans available.
+
+\section{Objectives}
+\label{sec:objectives}
+
+As previously stated in the former section, the main aim of the project is to provide a navigation system that will only use indoor navigation methods for Bush House. This will be achieved by creating two iOS applications: the first will be used to record positions on the floor plans of the building, and the second one will be used to detect the user's current location and consequently provide navigation guidance for the user. Furthermore, the latter application will also include AR features that will show live relevant information to the user, based on their current location, and what is around the user's current location.
+
+In order to achieve this, further objectives are required to be developed:
+\begin{itemize}
+    \item A simple server application connected to a database that will be responsible for storing data and delivering it when requested by the mobile apps, or any other logic entity that needs the data to determine the current position, or calculate a path; the connection to the database will be made through a REST API.
+    \item A server that will act as a middle man and will handle all the big computation processes in order to not overload the mobile devices. Such processes include providing navigation instructions given a start and finish points, calculating a route, managing the current position of the user, and providing relevant information to the user based on their location.
+\end{itemize}

@@ -1,0 +1,152 @@
+\documentclass[12pt]{informatics-report}
+\usepackage[utf8]{inputenc}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{subfiles}
+\usepackage{color}
+\usepackage[square,sort,comma,numbers]{natbib}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{indentfirst}
+\usepackage{longtable}
+\usepackage{minted}
+\usepackage{float}
+\usepackage[bottom]{footmisc}
+\usepackage{nomencl}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\usepackage{float}
+\usepackage{caption}
+\lstset{frame=single,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+% \lstdefinelanguage{swift}
+% {
+%   morekeywords={
+%     @NSManaged, @objc,
+%     func,if,then,else,for,in,while,do,switch,case,default,where,break,continue,fallthrough,return,
+%     typealias,struct,class,enum,protocol,var,func,let,get,set,willSet,didSet,inout,init,deinit,extension,
+%     subscript,prefix,operator,infix,postfix,precedence,associativity,left,right,none,convenience,dynamic,
+%     final,lazy,mutating,nonmutating,optional,override,required,static,unowned,safe,weak,internal,
+%     private,public,is,as,self,unsafe,dynamicType,true,false,nil,Type,Protocol,
+%   },
+%   morecomment=[l]{//}, % l is for line comment
+%   morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+%   morestring=[b]" % defines that strings are enclosed in double quotes
+% }
+ 
+% \definecolor{keyword}{HTML}{ba2c33}
+% \definecolor{string}{HTML}{D12F1B}
+% \definecolor{comment}{HTML}{008400}
+% \definecolor{listingsbg}{rgb}{.96,.96,.96}
+% \definecolor{mygray}{rgb}{.50,.50,.50}
+ 
+% \lstset{
+%   language=swift,
+%   basicstyle=\footnotesize\ttfamily,
+%   showstringspaces=false, % lets spaces in strings appear as real spaces
+%   columns=fixed,
+%   keepspaces=true,
+%   keywordstyle=\color{keyword},
+%   stringstyle=\color{string},
+%   commentstyle=\color{comment},
+%   backgroundcolor=\color{listingsbg},
+%   showspaces=false,
+%   showtabs=false,
+%   breaklines=true,
+%   frame=none,
+%   numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+%   numbersep=5pt,                   % how far the line-numbers are from the code
+%   numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+% }
+
+\setcounter{secnumdepth}{5}
+
+\titleformat{\subparagraph}
+    {\normalfont\normalsize\bfseries}{\thesubparagraph}{1em}{}
+\titlespacing*{\subparagraph}{\parindent}{3.25ex plus 1ex minus .2ex}{.75ex plus .1ex}
+
+\title{6CCS3PRJ\\\vspace{0.2cm}Indoor Wi-Fi Navigation with built-in Augmented Reality for Bush House}
+\author{Ion-Alexandru Clapa}
+\studentID{1525290}
+\supervisor{Dr. Andrew Coles}
+
+\date{\today}
+
+\abstractFile{FrontMatter/abstract.tex}
+\ackFile{FrontMatter/acknowledgements.tex} %Remove line if you do not want acknowledgements
+
+\begin{document}
+{%
+\setlength{\fboxsep}{0pt}%
+\setlength{\fboxrule}{1pt}%
+}%
+\restylefloat{figure}
+\captionsetup{justification=centering,margin=2cm}
+
+\abstractFile{FrontMatter/abstract.tex}
+\ackFile{FrontMatter/acknowledgements.tex}
+
+\createFrontMatter
+\onehalfspacing
+\tableofcontents
+\doublespacing
+\listoffigures
+\listoftables
+
+\makenomenclature
+\renewcommand{\nomname}{Abbreviations}
+
+\newpage
+
+\onehalfspacing
+\chapter{Introduction}
+\subfile{Introduction/introduction}
+\newpage
+\chapter{Background \& Literature Review}
+\subfile{Background/background}
+\newpage
+\chapter{Requirements and Specification}
+\subfile{RequirementsSpecification/reqs_specs}
+\newpage
+\chapter{Design}
+\subfile{Design/design}
+\newpage
+\chapter{Implementation}
+\subfile{Implementation&Testing/implementation}
+\newpage
+\chapter{Evaluation}
+\subfile{Evaluation/evaluation}
+\newpage
+\chapter{Legal, Social, Ethical and Professional Issues}
+\subfile{Legal/legal}
+\newpage
+\chapter{Conclusions \& Future Work}
+\subfile{Conclusion/conclusion}
+
+\newpage
+
+\printnomenclature
+
+\newpage
+
+\subfile{bib}
+\end{document}
