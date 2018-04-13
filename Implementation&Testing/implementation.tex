@@ -480,7 +480,7 @@ This class is similar to the one from the admin application. The methods defined
 This view controller is the main entry of the application. On loading, it calculates the user's current position using the IndoorLocationManager, and loads the corresponding floor plan, based on the user's location.
 
 \subsubsection*{MapViewController.swift}
-This view controller is composed of an UIImageView of the floor plan, where the user's location will be shown. The top part contains two UIButtons, from where the user can get to the DestinationViewController, which allows them to choose a destination, or to switch to the augmented reality mode.
+This view controller is composed of an UIImageView of the floor plan, where the user's location will be shown. The top part contains two UIButtons, from where the user can get to the DestinationViewController, which allows them to choose a destination, or to switch to the AR mode.
 
 Upon selecting a destination, a path will be drawn on the screen from the user's current position, to the destination. This is performed using CoreGraphics, a framework part of iOS which aids with drawing basic elements. First, the application will iterate through all the points which are part of the path, and will draw a line between each two of them, in order. The following code illustrates the drawing function:
 
@@ -500,3 +500,22 @@ func addLine(fromPoint start: CGPoint, toPoint end: CGPoint, in view: UIView) {
 
 \subsubsection*{DestinationsViewController.swift}
 This view controller has been implemented using a UITableView and a UISearchController. The UITableView shows all the rooms available on the current floor, which are fetched using the SearchHelper. The UISearchController is composed of a search bar which sits at the top of the table and is used to query the database for matching results, using again the SearchHelper. Selecting one room will bring the user back to the MapViewController, from where a path will be drawn on the screen, as previously described.
+
+\subsubsection*{ARNavigationViewController.swift}
+This view controller is the first one part of the AR mode, and aims to help users navigate, by showing an AR object made of an arrow, which points to the direction they need to follow. In order to know which direction the arrow needs to point to, the bearing angle between the current position and the destination position is calculated. This is done by using the latitude and longitude and values. Values from the mobile phone's compass are continuously received and used to rotate the arrow based on the user's orientation.
+
+\subsubsection*{ARLocationInformationViewController.swift}
+The second part of the AR mode is made of this view controller, which shows timetable information and the availability of computers in the computer labs that are close to the user's current position. First, the mobile app requests the closest locations in each room, based on the current position, and then it requests information for each of them. Images are returned for the timetables, and a JSON with the availability of the computers is returned from PC-Free. This is done using the AR Data Provided. Finally, the AR elements are placed using the ARKit+CoreLocation library, using the latitude and longitude values received from the back-end server.
+
+\section{Testing}
+In order to deliver quality solutions and products, the software produced needs to be thoroughly tested. The system developed is composed of a multitude of components and subsystems. Each of them need to tested individually, and then as a whole, to ensure that they run correctly.
+
+\subsection{Unit Testing}
+Unit testing is usually used to guarantee that the methods part of a component are producing the intended results. These kinds of tests are important when used to test a system in an isolated way, especially when they interact with other systems, because they can detect where the problem comes from. 
+
+All the model classes that are part of the server that manages the database have benefited from unit testing. These tests have made sure that given an input, they create the right entity, with the right values. The same strategy has been applied to the Scan Switch server, which temporarily stores scanning data used for path finding. 
+
+The positioning system has initially been tested manually, but to ensure that it runs correctly, unit tests have been created in order to check that the user is positioned correctly. For the path finding algorithm, the HTTP client has been replaced with a mock one, that returns manually created data. This data is composed of real world location from across the globe, with set latitude and longitude values. The connections between these locations have been also created manually, in order to test if the route between two of them is chosen correctly. In the graph created, there are multiple ways to navigate from point A to point B, all with different distances. In other words, the test had made sure that the route chosen is the one with the shortest distance.
+
+\subsection{Integration between mobile applications and servers}
+The mobile applications are very UI heavy, because the models are part of the servers. This is usually harder to test by unit testing. Therefore, testing these apps has been done manually, by making sure that the visual elements are placed in the right positions, and the data that they show is right. Moreover, to ensure the integration between the apps and the servers, which is done through the multitude of REST APIs, all the resources that can be accessed through the REST APIs have been thoroughly tested using Postman (an API development environment, which allows API testing). 

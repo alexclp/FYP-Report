@@ -27,15 +27,24 @@ The second scenario the algorithm has been tested was when data has not been mea
     \label{fig:ips-unknown-loc}
 \end{figure}
 
-\section{Navigation Algorithm Analysis}
-
-The testing approach for the navigation algorithm has been the same as the one for the IPS. The algorithm has been tested first with locations in the same room, then between two adjacent rooms, and then from wing to wing. In order to test the algorithm, convenient positions have been recorded in order for the path to be shown in a user friendly way on the floor plan (e.g. in front of doors; in this way the path will line up perfectly on the screen and they will not be placed on top of walls). One of the large scale tests has been from the end of the South Wing to my supervisor's office. It can be seen in figure 6.3 that the algorithm has been successful in finding a path between the two locations.
+\section{Path Finding Algorithm Analysis}
+The testing approach for the path finding algorithm has been the same as the one for the IPS. The algorithm has been tested first with locations in the same room, then between two adjacent rooms, and then from wing to wing. In order to test the algorithm, convenient positions have been recorded in order for the path to be shown in a user friendly way on the floor plan (e.g. in front of doors; in this way the path will line up perfectly on the screen and they will not be placed on top of walls). One of the large scale tests has been from the end of the South Wing to my supervisor's office. It can be seen in figure 6.3 that the algorithm has been successful in finding a path between the two locations.
 
 \begin{figure}[H]
     \centering
     \fbox{\includegraphics[width=180px, height=280px]{Evaluation/long-path.png}}
     \caption{Long path between a computer lab in the South Wing and an office on the North Wing of Bush House. The square in blue represents the current position of the user and the squares in red represent the way-points to follow. The last red square represents the destination.}
     \label{fig:nav-long-path}
+\end{figure}
+
+\section{AR Features Results}
+Another big part of the project has been composed of the two AR features that the project has aimed to meet. In combination with the path finding algorithm, the first AR feature facilitates the navigation process by showing the direction to follow, based on the smartphone's built-in compass. The user mobile apps has managed to show the proposed visual cue, but its bearing angle has proved to be many times inaccurate. The magnetic field created by the multitude radio networks from the Wi-Fi networks, together with the magnetic field produced by the Raspberry Pi, which needs to be in the proximity of the smartphone are causing reflections. However, the angle corrects itself when moving around, because this allows time for the compass to calibrate. In figure \ref{fig:ar-arrow} it can be observed the direction that is suggested by the user app to follow in order to exit the computer lab, and reach the corridor.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=180px, height=320px]{Evaluation/AR-arrow.png}
+    \caption{Screen shot taken from the user mobile app which shows the guidance arrow for navigation}
+    \label{fig:ar-arrow}
 \end{figure}
 
 \section{Project Evaluation}
@@ -68,7 +77,7 @@ When taking into consideration the requirements set in chapter 4, it can be said
 % In results, talk about the overhead that the HTTP request bring for example to the positioning algorithm, or even the navigation algorithm.
 
 \section{Comparison to other existing solutions}
-When it comes to compare the functionalities and capabilities, along with the way of working of the application built, the most suitable comparison would be with "Indoor Survey App" \cite{apple-indoor-survey}. The comparison with the application built by Apple is the most relevant, since the way of measuring data for location is very similar, but our solution provides an arguably better and more extensible system.
+When comparing the functionalities and capabilities, along with the way of working of the application built, the most suitable comparison would be with "Indoor Survey App" \cite{apple-indoor-survey}. The comparison with the application built by Apple is the most relevant, since the way of measuring data for location is very similar, but our solution provides an arguably better and more extensible system.
 
 The most important comparison that can be made with Apple's solution is the architecture of the system. A very important aspect to remember is that Indoor Survey App provides positioning and measuring for any building that follows their specific requirements, whereas our solution only supports Bush House. However, this is a feature that can be easily added on top of the existing capabilities, since our system has been developed with extensibility in mind.
 
