@@ -3,23 +3,23 @@
 iOS is a mobile operating system, created and developed by Apple \cite{iOS}. It is the operating system that currently runs on many of the company's devices, such as iPhone, iPad, or iPod Touch. It is considered to be the second most popular mobile operating system, after Android \cite{iOS}.
 
 \subsection{Swift}
-Swift is a programming language created by Apple, which was launch as an alternative for Objective-C, in order to create iOS apps \cite{swift}. The goal of the creators of Swift is to create a programming language that could be used on a variety of systems, such as mobile, desktop or even cloud services (servers) \cite{swift}. Soon after the launch, the programming language has been made open-source, which has opened the way for it to be used in more than just iOS-running devices. Swift is believed to be:
+Swift is a programming language created by Apple, which was launched as an alternative for Objective-C, in order to create iOS apps \cite{swift}. The goal of the creators of Swift is to create a programming language that could be used on a variety of systems, such as mobile, desktop or even cloud services (servers) \cite{swift}. Soon after the launch, the programming language has been made open-source, which has opened the way for it to be used in more than just iOS-running devices. Swift is believed to be:
 \begin{itemize}
-    \item Safe
+    \item Safe: it includes features that make the applications crash less. For example, Optionals are wrappers that can either hold a value or not. In this way, by safely extracting the value before using it, a crash is avoided when the value would be non existent. 
     \item Fast: it was made as a replacement for C-based languages, which have always been very fast.
     \item Expressive: "Swift benefits from decades of advancement in computer science to offer syntax that is a joy to use, with modern features developers expect" \cite{swift}.
 \end{itemize}
 
-Because this is the most popular way to create iOS applications, Swift has been chosen in order to make the user and admin applications.
+Because this is the most popular way to create iOS applications, Swift has been chosen in order to make the user and admin applications in this project.
 
 \subsection{Vapor}
-Vapor is a web framework that provides a way to create server side applications using Swift. It is a secure framework, which offers encryption for all network requests as default, and a very fast framework. Benchmarks have been showing that it is nearly 100 times faster that other web frameworks, such as Ruby and PHP \cite{vapor}. Due to its rapid rise and popularity and its very helping community, this framework has been chosen as an experiment in order to determine how feasible it is to create web applications using Swift.
+Vapor is a web framework that provides a way to create server side applications using Swift. It is a secure framework, which offers encryption for all network requests as default, and a very fast framework. Benchmarks have been showing that it is nearly 100 times faster than other web frameworks, such as Ruby and PHP \cite{vapor}. Due to its rapid rise in popularity and the supporting and helpful community, this framework has been chosen as an experiment in order to determine how feasible it is to create web applications using Swift.
 
 \subsection{Python}
-Python is a interpreted programming languages, meant to be used for general-purpose programming. Python is very easy to learn and use, regardless of the programmer's experience \cite{python}. This programming languages will be used for the AR Data Provider, mainly due to the fact that there are a multitude of libraries that achieve most of the tasks one would like. The vast number of community-contributed modules allow for "endless possibilities" \cite{python}. In our project, the Selenium library will be used in order to effortlessly automate actions in a web browser, when using King's timetable service.
+Python is a interpreted programming languages, meant to be used for general-purpose programming. Python is very easy to learn and use, regardless of the programmer's experience \cite{python}. This programming languages will be used for the AR Data Provider, mainly due to the fact that there are a multitude of libraries that achieve most of the tasks one would like. The vast number of community-contributed modules allow for "endless possibilities" \cite{python}. In this project, the Selenium library will be used in order to effortlessly automate actions in a web browser, when using King's timetable service.
 
 \subsection{Flask}
-Flask is a lightweight microframework for Python \cite{flask}. This allows to write server applications using Python. The framework makes possible creating the server that will provide data for the AR features in the user application. Because the design is very decoupled, this framework makes the connection between the AR Data Provider and any system that requires its data.
+Flask is a lightweight microframework for Python \cite{flask}. This allows to write server applications using Python. The framework makes it possible to create the server that will provide data for the AR features in the user application. Because the design is very decoupled, this framework makes the connection between the AR Data Provider and any system that requires its data.
 
 \subsection{Linux}
 Linux is a family of free and open-source operating systems. It is a very popular system that runs on a variety of platforms, from phones to desktop computers, and to servers and mainframe computers \cite{linux}. The Raspberry Pi runs a light distribution of Linux, called Raspbian. This operating systems offers basic functionalities for the Raspberry Pi devices, and it is made to be very optimised for low-performance processors.
@@ -31,15 +31,14 @@ Java is a general-purpose programming language that was inspired by C++ and is m
 ARKit is a framework that allows programmers to bring AR experiences in their iOS applications \cite{arkit}. It was launched together with iOS 11 and makes using AR on iOS much more easier than before. The framework provides a lot of functionalities that the developers can easily use, such as scene understanding and lightning estimations, which detects the vertical and horizontal panes which are around, and makes use of the camera to detect the amount of light available and later apply it to the virtual objects \cite{arkit}. This framework has been chosen because of its ease of use on iOS and its high level of performance optimisation.
 
 \subsection{Heroku}
-Heroku is a cloud platform that allows web applications to be deployed. It supports a vast number of programming languages and frameworks, mainly because its active community. Heroku brings a very easy and simple solution for deployment and has been chosen as a solution in our project mainly because of this reason.
+Heroku is a cloud platform that allows web applications to be deployed. It supports a vast number of programming languages and frameworks, mainly because its active community. Heroku brings a very easy and simple solution for deployment and has been chosen as a solution in our project mainly because of this reason. The server that manages the database, the scanner switch, and the positioning \& path finding system have been deployed on Heroku, in order to better integrate them with the mobile apps. If they would be run locally, on a laptop, their IP address would change often, and configuring the code would be required before running the applications. Thus, by deploying on Heroku, a static address is assigned to them, and no further configuration is required.
 
 \subsection{PostgreSQL}
-PostgreSQL is a relational database system, based on SQL \cite{postgresql}. It currently runs on most of the major operating systems, and is supported by the majority of programming languages \cite{postgresql}. Because the servers have been deployed on Heroku, and because Heroku supports PostgreSQL as its main relational database system, this component has been chosen for our project.
+PostgreSQL is a relational database system, based on SQL \cite{postgresql}. It currently runs on most of the major operating systems, and is supported by the majority of programming languages \cite{postgresql}. Because the servers have been deployed on Heroku, and because Heroku supports PostgreSQL as its main relational database system, this component has been chosen for the database system in this project.
 
 \newpage
 \section{Architectural Design}
 The architecture has been divided into four independent layers. This approach makes the whole system easier to manage, and very simple to replace or change parts of it, if they need to be extended or improved. The System Architecture Diagram shown in figure \ref{fig:system-architecture-design}, describes the aforementioned four layers. 
-
 The top layer, the User Interface Layer, is composed of the two applications: the admin application, used to measure and register positions in Bush House, and the user application, which will make use of the data for positioning and navigation. 
 The second layer, the Scanning Layer, deals with scanning data when requested (when recording a position or when positioning is needed) and uploading it in the database. This layer is composed of a Raspberry Pi that scans, parses results and makes HTTP requests in order to upload the data, and a simple web application that will act as a bridge between the Raspberry Pi and the mobile applications, by letting the Raspberry Pi know when data is needed.
 
@@ -47,7 +46,7 @@ The lower two layers, the Logic Layer and the Data Management Layer, work togeth
 
 \begin{figure}[H]
     \centering
-    \fbox{\includegraphics[width=420px, height=360px]{Design/diagram2.png}}
+    \fbox{\includegraphics[width=341px, height=300px]{Design/diagram2.png}}
     \centering
     \caption{System Architecture Design. Depicts the 4 layers of the navigation system, along with the subsystems and how they interact between themselves.}
     \label{fig:system-architecture-design}
@@ -84,7 +83,7 @@ Upon the first launch of the application, the admin user will be required to cal
 After the position is calculated both in 2D values, and latitude and longitude, the application must upload them into the database, using the API.
 
 \subsubsection{User Application}
-The user application is designed following an MVC pattern as well. The components of MVC achieve similar goals as the admin application. 
+The user application is designed following an MVC pattern as well, shown in figure \ref{fig:user-mvc}. The components of MVC achieve similar goals as the admin application. 
 
 \begin{figure}[H]
     \centering
@@ -122,7 +121,7 @@ The second part of the scanning layer is a small web application that acts as a 
     \centering
     \fbox{\includegraphics[width=420px, height=332px]{Design/Scan-Switch-MVC.png}}
     \centering
-    \caption{Scan Switch MVC Design. The design is split into model, view and controller. The rectangles inside each component represent the classes that are part of it.}
+    \caption{Scan Switch MVC Design. The design is split into model, view and controller. The rectangles inside each component represent the classes that are part of it. The arrows show that the Controller manages both the Model and the View.}
 \label{fig:scan-switch-mvc}
 \end{figure}
 
@@ -152,13 +151,13 @@ This application implements a REST API that handles HTTP requests in order to ac
 The Logic Layer is composed of two systems: the AR data provider and the positioning \& path finding system. These two subsystems provide the core algorithms and functions that the system relie on. 
 
 \subsubsection{Positioning \& Path Finder System}
-This part of the project is the most important one, because the positioning and path finder system calculates all the data to position the user and find optimal paths. Because it will developed using Vapor, as we will see in the Implementation chapter, it follows an MVC design pattern. Similar as before, the View component is here represented by the JSON responses, as we will see shortly.
+This part of the project is the most important one, because the positioning and path finder system calculates all the data to position the user and find optimal paths. Because it is developed using Vapor, an MVC based web framework, it follows an MVC design pattern. Similar as before, the View component is here represented by the JSON responses.
 
 \begin{figure}[H]
     \centering
     \fbox{\includegraphics[width=386px, height=300px]{Design/Back-end-MVC.png}}
     \centering
-    \caption{Positioning \& Path Finder System MVC Design. The design is split into model, view and controller. The rectangles inside each component represent the classes that are part of it.}
+    \caption{Positioning \& Path Finder System MVC Design. The design is split into model, view and controller. The rectangles inside each component represent the classes that are part of it. The arrows show that the Controller manages both the Model and the View.}
     \label{fig:pos-nav-mvc}
 \end{figure}
 
@@ -313,7 +312,7 @@ The database stores data used for positioning and navigation. The data models de
     \centering
     \fbox{\includegraphics[width=350px, height=254px]{Design/ERD.png}}
     \centering
-    \caption{ERD diagram of the database objects. The rectangles represent the data models along with their properties; they are connected between themselves by relations.}
+    \caption{ERD diagram of the database objects. The rectangles represent the data models along with their properties; they are connected between themselves by relations. The arrows represent a one to many relation.}
     \label{fig:erd-diagram}
 \end{figure}
 

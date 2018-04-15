@@ -1,0 +1,76 @@
+\chapter{User Guide}
+\clearpage
+
+\section{Originality Avowal}
+I verify that I am the sole author of the programs contained in this folder, except where explicitly stated to the contrary.
+
+\begin{flushright}
+\par Ion-Alexandru Clapa
+\par April 16, 2018
+\end{flushright}
+
+\clearpage
+
+\lstlistoflistings
+
+\clearpage
+
+\lstdefinelanguage{swift}
+{
+  morekeywords={
+    func,if,then,else,for,in,while,do,switch,case,default,where,break,continue,fallthrough,return,
+    typealias,struct,class,enum,protocol,var,func,let,get,set,willSet,didSet,inout,init,deinit,extension,
+    subscript,prefix,operator,infix,postfix,precedence,associativity,left,right,none,convenience,dynamic,
+    final,lazy,mutating,nonmutating,optional,override,required,static,unowned,safe,weak,internal,
+    private,public,is,as,self,unsafe,dynamicType,true,false,nil,Type,Protocol,import,@UIApplicationMain,
+    guard,_,Any,@escaping,try,@objc,@NSManaged,@nonobjc
+  },
+  morecomment=[l]{//}, % l is for line comment
+  morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+  morestring=[b]" % defines that strings are enclosed in double quotes
+}
+
+\lstdefinelanguage{JavaScript}
+{
+  morekeywords={const, class, export, boolean, throw, implements, import, this, typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break, let, for},
+  morecomment=[s]{/*}{*/},
+  morecomment=[l]//,
+  morestring=[b]",
+  morestring=[b]'
+}
+\lstdefinelanguage{json}{
+    showstringspaces=false,
+    literate=
+     *{0}{{{\color{keyword}0}}}{1}
+      {1}{{{\color{keyword}1}}}{1}
+      {2}{{{\color{keyword}2}}}{1}
+      {3}{{{\color{keyword}3}}}{1}
+      {4}{{{\color{keyword}4}}}{1}
+      {5}{{{\color{keyword}5}}}{1}
+      {6}{{{\color{keyword}6}}}{1}
+      {7}{{{\color{keyword}7}}}{1}
+      {8}{{{\color{keyword}8}}}{1}
+      {9}{{{\color{keyword}9}}}{1}
+      {:}{{{\color{string}{:}}}}{1}
+}
+
+\definecolor{keyword}{HTML}{BA2CA3}
+\definecolor{string}{HTML}{D12F1B}
+\definecolor{comment}{HTML}{008400}
+
+\lstset{
+  language=swift,
+  basicstyle=\linespread{1}\fontsize{9}{11}\ttfamily,
+  showstringspaces=false,
+  columns=fixed,
+  keepspaces=true,
+  keywordstyle=\color{keyword},
+  stringstyle=\color{string},
+  commentstyle=\color{comment},
+  numbers=left,
+  stepnumber=1,
+  breaklines=true,
+  breakatwhitespace=false,
+  tabsize=1,
+  frame=tb,
+}

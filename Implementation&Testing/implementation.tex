@@ -1,9 +1,9 @@
 This chapter will outline how the design plans previously described have been implemented and put into play. The chapter will start with discussing how the development process has been approached, and then the system features. The chapter will conclude by describing the issues that have been raised during the process, along with how they have been resolved. A priority in this project has always been to make it as extensible and as decoupled as possible.
 
 \section{Development Approach}
-The approach to software development was dictated by the fact that the project was conducted by only one individual. As such, a waterfall approach was adopted, where first the requirements are produced, then based on that the design is created, and finally the features are implemented, tested and maintained. 
+The approach to software development was dictated by the fact that the project was conducted by only one individual. As such, a lean approach was adopted, where small iterations of the project and features are incrementally implemented and integrated. 
 
-Although this is not typical of a waterfall approach, during the early stages, before implementation, a lot of prototyping took place in order to figure out the feasibility of using certain libraries to achieve the proposed goals. Thus, the first experimental application was one that used ARKit in order to place different AR objects around Bush House in convenient location. This led to a better understanding on how ARKit will be later used and how feasible it is to implement the planned features. After this, the capabilities of Swift running on the server through the Vapor framework, and a small server that implements a REST API has been developed.
+The process has started by prototyping in order to figure out the feasibility of using certain libraries to achieve the proposed goals. Thus, the first experimental application was one that used ARKit in order to place different AR objects around Bush House in convenient location. This led to a better understanding on how ARKit will be later used and how feasible it is to implement the planned features. After this, the capabilities of Swift running on the server through the Vapor framework, and a small server that implements a REST API has been developed.
 
 During the development process, the independence between all the parts of the system has been closely followed, along with increased re-usability and flexibility to change without affecting the whole system in any way. The order of the developed work has been decided based on the dependencies between the sub-systems and layers, considering the following points:
 \begin{enumerate}
@@ -293,7 +293,7 @@ The end result after creating the path is then encoded into JSON format and retu
 
 \subsubsection{AR Data Provider}
 
-The initial design of this system was to be included in the one system, along with the Navigation one. Unfortunately, due to the limitations of Vapor, these two have been separated. These limitations will be further detailed in conclusion.
+The initial design of this system was to be included in the one system, together with the Positioning \& Path Finding system. However, due to the lack of a web automation library that in combination with a parser will retrieve data, these two systems have been separated instead.
 
 Instead of Vapor and Swift, this system has been written in Python, using Selenium, an automation tool for browsers. Next, the software has been deployed to work through a server with a lightweight API to access data. The framework used for deploying it and API management is Flask, which allows to do web development using Python.
 
@@ -319,7 +319,7 @@ The end result will be a screen-shot with the timetable for the requested room. 
 \end{figure}
 
 \subsubsection*{PC-Free information}
-The PC-Free provider works in a similar way as the timetable one. To access data for a room, a GET HTTP request is made to "/pcfree/:room", where as before, ":room" is the code of the room. The web driver then navigates to "http://pcfree.kcl.ac.uk", but instead of taking a screen-shot of the page, its HTML source is parsed, using BeautifulSoup. The corresponding element that holds information about the number of computers is found, and the result is returned in a JSON format. The function that achieves this is illustrated below:
+The PC-Free provider works in a similar way as the timetable one. To access data for a room, a GET HTTP request is made to "/pcfree/:room", where as before, ":room" is the code of the room. The web driver then navigates to "http://pcfree.kcl.ac.uk", and searches for the element that matches the room for which the data was requested. Once found, a screen shot is taken from the whole screen, and then cropped around the area of interest.
 
 \begin{lstlisting}
 def get_available_computers(room):
@@ -329,22 +329,25 @@ def get_available_computers(room):
         full_room_name = bs.find('h2').text
         if "BH(S)" in full_room_name:
             if room in full_room_name:
-                available = bs.find('strong').text
-                return available
-    return "Failed"
+                location = element.location
+                size = element.size
+                img = driver.get_screenshot_as_png()
+                img = Image.open(BytesIO(img))
+                left = location['x']
+                top = location['y']
+                right = location['x'] + size['width']
+                bottom = location['y'] + size['height']
+                img = img.crop((int(left), int(top), int(right), int(bottom)))
+                img.save('pcfree.png')
+                return
+    return None
 \end{lstlisting}
 
-The result is encoded into JSON format, and the returned object will look as following:
-
-\begin{lstlisting}
-{
-    "result": "152 of 208 computers available"
-}
-\end{lstlisting}
+The result is encoded into JSON format, and then sent to the requesting entity.
 
 \subsection{Scanning Layer}
 \subsubsection{Raspberry Pi Scanner}
-The scanner on the Raspberry Pi is composed of a bash script that scans continously for Wi-Fi networks, and then runs a Java application that parses the results and uploads them if needed. In order to perform a scan, the system uses a Linux package, iwlist, and then the results are manipulated by grep, that matches them to a regular expression.
+The scanner on the Raspberry Pi is composed of a bash script that scans continuously for Wi-Fi networks, and then runs a Java application that parses the results and uploads them if needed. In order to perform a scan, the system uses a Linux package, iwlist, and then the results are manipulated by grep, that matches them to a regular expression.
 \begin{lstlisting}
 sudo iwlist wlan0 scan | egrep "Cell|ESSID|Signal" >> output.txt
 \end{lstlisting}
@@ -375,7 +378,7 @@ Other than the shouldScan flag, ids for rooms and locations are temporarily stor
 This class is identical to the one described for the server that manages the database. In order to avoid repetition, its fields and properties will not be included. As previously mentioned, this class is used to temporarily store data that is used for positioning. After the positioning process ends, the data is discarded.
 
 \subsection{User Interface Layer}
-As previously said, the User Interface Layer is an important component, because it acts as the primary way for the user to interact with the system. The graphical user interface provides a clear and simple way to measure floor plans, see recorded locations, manage rooms or navigate through the building. The implementation choices and features for each mobile application will be described in the following sections.
+The User Interface Layer is an important component, because it acts as the primary way for the user to interact with the system. The graphical user interface provides a clear and simple way to measure floor plans, see recorded locations, manage rooms or navigate through the building. The implementation choices and features for each mobile application will be described in the following sections.
 
 \subsubsection{Admin Application}
 The Admin Application is implemented as an iOS application, written in Swift. It follows an Model-View-Controller pattern design, which is standard on iOS. The classes included in the mobile application are mainly used to make HTTP requests to ask for data, and then the View Controllers handle showing data onto the screen. Some simple calculations are being made in order to calculate the latitude and longitude coordinates, given the floor plan coordinate values.
@@ -390,7 +393,7 @@ This class manages all HTTP requests that are being made in the app. Its design 
 This class contains utility functions which are used along the app in order to do small calculations. All of the calculations are geometry based, such as the haversine distance, the Manhattan distance, a circle intersection, and point coordinates interpolation. The following paragraphs will highlight how these functions are performed.
 
 \subsubsection*{Haversine Distance}
-The Haversine has been mathematically detailed in the Background chapter, and in order to avoid repetition, please refer to that. The code implements the aforementioned equations, and it is taken from the Swift Algorithm Club. The credit for this code has clearly stated in the class file.
+The Haversine has been mathematically detailed in the Background chapter. The code implements the aforementioned equations, and it is taken from the Swift Algorithm Club. The credit for this code has clearly stated in the class file.
 
 \begin{lstlisting}
 let haversin = { (angle: Double) -> Double in
@@ -422,12 +425,12 @@ Circle intersection is being made between the corners of the building and the de
     \item The set of equations is therefore solved and the possible two intersections are returned.
 \end{enumerate}
 
-It is very important to mention that the solution is being based on an external source which has been adapted to the current needs of the application. The source of the algorithm has been clearly specified in the source code. Please refer to the Appendix for more details.
+It is important to mention that the solution is based on an external source which has been adapted to the current needs of the application. The source of the algorithm has been clearly specified in the source code. Please refer to the Appendix for more details.
 
-After the intersection is performed, the Location object then can be uploaded into the database, with its 2D location and its latitude and longitude. The latitude and longitude positions are used for navigation, in order to find the distance, and to place augmented reality objects.
+After the intersection is performed, the Location object can then be uploaded into the database, with its 2D location and its latitude and longitude. The latitude and longitude positions are used for navigation, in order to find the distance, and to place augmented reality objects.
 
 \subsubsection*{Interpolating 2D Coordinates}
-Location objects are being registered on different screen sizes, and because of this, the coordinate set changes for each device the application runs on. In order to show the same position on the screen no matter what the size of the screen is, the 2D coordinates have to be adapted, based on the device they have been registered on. Therefore, the points are interpolated based on the standard size (the source) and the current size of the screen. The code below illustrates this better.
+Location objects are being registered on different screen sizes. For example, the iPad is used for measuring, because the larger screen makes it more accurate when tapping on the floor plan image. Because of this, the coordinate set changes for each device the application runs on. In order to show the same position on the screen no matter what the size of the screen is, the 2D coordinates have to be adapted, based on the device they have been registered on. Therefore, the points are interpolated based on the standard size (the source) and the current size of the screen. The code below illustrates this better.
 
 \begin{lstlisting}
 static func interpolatePointToCurrentSize(point: CGPoint, from standardSize: CGSize, in view: UIView) -> CGPoint? {
@@ -440,7 +443,7 @@ static func interpolatePointToCurrentSize(point: CGPoint, from standardSize: CGS
 \end{lstlisting}
 
 \subsubsection{View Controller classes}
-This is the iOS application which will be used by administrators to manage rooms. Upon the very first launch of the application, the user is required to "calibrate" the application by registering 2D coordinates of the building's corner. This process is achieved by asking the user to tap on the image on the top left \& right and bottom left \& right corners of the floor plan's image. This calibration is done in the CornerViewController class, and the values are saved in the UserDefaults persistent storage. 
+This is the iOS application which will be used by administrators to manage rooms. The calibration process is achieved by asking the user to tap on the image on the top left \& right and bottom left \& right corners of the floor plan's image. This calibration is done in the CornerViewController class, and the values are saved in the UserDefaults persistent storage. 
 
 After calibration is done, view controllers that are handling rooms managing and location managing are being launched. These will be further illustrated below.
 
@@ -457,7 +460,7 @@ Similarly to the CornerListViewController class, this class implements a UITable
 This class implements a UITableView which is filled in with the rooms on the selected floor. From here, the user can add a room by pressing a "+" button and filling in the data, delete a room or clear the data from it. By pressing on a room, this will launch an image of the floor plan, from where the user can record locations. The methods available in this class use the HTTPClient class to make HTTP requests to the database, in order to perform CRUD operations.
 
 \subsubsection*{FloorPlanViewController}
-This is the last and most important view controller in the app. It implements an UIImageView which shows the floor plan for the selected floor. Upon loading, the already registered locations are placed on the floor plan by fetching them from the database. User can tap on the image on the locations where they are to register a location. This will create a Location entity with the x, y coordinates taken from the image, and will calculate the latitude and longitude, using the intersection of circle (triliteration). Next, a request is made to the Scanner Switch to scan data with the roomID and locationID of the Location just created, and the measurements will be uploaded from the Raspberry Pi to the database. 
+This is the last and most important view controller in the app. It implements an UIImageView which shows the floor plan for the selected floor. Upon loading, the already registered locations are placed on the floor plan by fetching them from the database. User can tap on the image on the locations where they need to register a location. Next, a request is made to the Scanner Switch to scan data with the roomID and locationID of the Location just created, and the measurements will be uploaded from the Raspberry Pi to the database. 
 
 Additionally, this view controller allows admins to connect to Locations, which helps in the  navigation process. This is done by tapping on one Location square from the screen, which is set as the root location. The next step is to tap the location to connect the current one to, which is set as the child. After both have been selected, a HTTP request is made to the database through the REST API, and a LocationConnection entity is created.
 

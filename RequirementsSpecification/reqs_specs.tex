@@ -18,7 +18,7 @@ Before discussing the requirements, in order to get a better grasp of the projec
 \newpage
 
 \section{System Components}
-In order to fully understand the functional requirements that are going to be defined in section \ref{sec:requirements}, it is very important to visualise the organisation of the system. This can be done by using figure \ref{fig:high-level-organisation}. The components have been separated into the presentation layer, which displays the services available by communicating with the lower layers, the logic tier, where controls the system's main functionalities, and the data tier, which houses the database servers (the data is kept independent of the other layers) \cite{three-tier}.
+In order to fully understand the functional requirements that are going to be defined in section \ref{sec:requirements}, it is important to visualise the organisation of the system. This can be done by using figure \ref{fig:high-level-organisation}. The components have been separated into the presentation layer, which displays the services available by communicating with the lower tiers, the logic layer, which controls the system's main functionalities, and the data layer, which houses the database servers (the data is kept independent of the other layers). This is based on a three tier architecture \cite{three-tier}.
 
 \begin{figure}[H]
     \centering
@@ -95,12 +95,12 @@ The specific requirements for each component are detailed:
 \end{itemize}
 
 \section{Non-functional Requirements}
+\label{sec:non-functional-reqs}
 \begin{itemize}
-    \item Extensibility – The system should have an implementation that can easily grow in features and capabilities at any given moment. These features should be added whilst minimising the impact to the existing system functions
     \item Interoperability – The subsystems should be able to fully integrate with other subsystems in order to provide maximum flexibility.
-    \item Maintainability – The system should be provide a simple to extend feature base. For this, the follow concepts must be followed:
+    \item Maintainability – The system should provide a simple and easy way to extend feature base. For this, the follow concepts must be followed:
         \begin{itemize}
-            \item Separation of Systems – The system must be decomposed in multiple independent subsystems which must be as decoupled as possible. The systems should use the appropriate programming languages and framework to achieve their requirements and tasks.
+            \item Separation of Systems – Separation of Systems – The system must be decomposed in multiple independent subsystems which must be as decoupled as possible. The systems should use the appropriate programming languages and framework to achieve their requirements and tasks.
             \item Architectural Patterns – Each subsystem should follow the appropriate architectural pattern and design patterns provided by the framework that is being used, or the programming language that the system is written in.
         \end{itemize}
     \item Usability – The system should provide an easy to use interface, and as clear as possible. Although it can be simple, the interfaces must provide clarity of interactions, and a satisfactory user experience.
